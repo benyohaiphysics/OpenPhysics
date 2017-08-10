@@ -19,7 +19,7 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 
 ## Future goals
 
-[] Consistent design across all resources
-[] Complete all areas of the GCSE
-[] Complate all areas of the A-Level
-[] Expand beyond worksheets to textbook pages
+[ ] Consistent design across all resources
+[ ] Complete all areas of the GCSE
+[ ] Complate all areas of the A-Level
+[ ] Expand beyond worksheets to textbook pages
