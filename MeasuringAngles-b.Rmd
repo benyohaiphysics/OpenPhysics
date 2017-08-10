@@ -1,0 +1,95 @@
+---
+title: "Measuring Angles"
+output:
+  pdf_document: 
+    keep_tex: no
+    latex_engine: lualatex
+  html_document: default
+  documentclass: article
+subtitle: Refraction
+classoption: a4paper
+geometry: "left=1cm,right=1cm,top=2cm,bottom=1cm"
+header-includes: 
+  - \usepackage{tikz}
+  - \usetikzlibrary{arrows,shapes,positioning,decorations.markings}
+  - \usepackage{longtable}
+  - \usepackage{gensymb}
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancyplain}
+  - \fancyhf{}
+  - \fancyhead[L]{Version b}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+```
+
+For each of the following ray diagrams measure the angles of incidence, $i$, and refraction, $r$.
+
+
+```{r, results = "asis", echo=FALSE}
+refractiveIndices <- read.csv("ReferenceData/RefractiveIndices.csv")
+
+template <- "\\scalebox{0.8}{\\begin{tikzpicture}
+
+    %% define coordinates
+    \\coordinate (O) at (0,0) ;
+    \\coordinate (A) at (0,3) ;
+    \\coordinate (B) at (0,-3) ;
+    
+    %% media
+    \\fill[blue!25!,opacity=.3] (-3,0) rectangle (3,3);
+    \\fill[blue!60!,opacity=.3] (-3,0) rectangle (3,-3);
+    \\node[right,text width=1.9cm] at (0.5,2) {%s};
+    \\node[right,text width=1.9cm] at (-2.5,-2) {%s};
+
+    %% rays
+    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (O) -- (%s:%s);
+    \\draw[blue,ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (-%s:%s);
+
+    %% axis
+    %%\\draw[dash pattern=on5pt off3pt] (A) -- (B);
+
+    %% angles
+    %%\\draw (0,1) arc (90:%s:1);
+    %%\\draw (0,-1.4) arc (270:%s:1.4) ;
+    %%\\node[] at (%s:1.4)  {$\\theta_{1}$};
+    %%\\node[] at (%s:1.8)  {$\\theta_{2}$};
+\\end{tikzpicture}}"
+
+printstring<-"\\begin{center}\\begin{tabular}{ p{5cm} p{5cm} p{5cm} }"
+answers<-data.frame(
+  'angle'=character(), 
+  'refractedAngle'=character()
+)
+for (i in 1:12) {
+  materialSamples <-sample(1:nrow(refractiveIndices), 2, replace=T)
+  material1name <- sub("%","\\\\%",refractiveIndices$Material[materialSamples[1]])
+  material2name <- sub("%","\\\\%",refractiveIndices$Material[materialSamples[2]])
+  material1refractiveIndex <-refractiveIndices$RefractiveIndex[materialSamples[1]]
+  material2refractiveIndex <-refractiveIndices$RefractiveIndex[materialSamples[2]]
+  angle <-sample(10:70,1)
+refractedAngle <- rad2deg(asin(sin(material1refractiveIndex*deg2rad(angle)/material2refractiveIndex)))
+ray1length <- min(3/cos(deg2rad(angle)),3/cos(deg2rad(90-angle)))
+ray2length <- min(3/cos(deg2rad(refractedAngle)),3/cos(deg2rad(90-refractedAngle)))
+  printstring<-cat(printstring,sprintf(template,material1name,material2name,90+angle,ray1length,90-refractedAngle,ray2length,90+angle,270+refractedAngle,mean(c(90,90+angle)),mean(c(270,270+refractedAngle))),"\\newline",i,") $i$=\\newline \\hspace*{5mm}$r$=",sep="")
+  if((i/3)%%1==0){
+    printstring<-cat(printstring,"\\\\")
+  } else{
+    printstring<-cat(printstring,"&")
+  }
+  answers<-rbind(answers,c(angle,round(as.numeric(refractedAngle),digits=0)))
+  
+}
+colnames(answers) <- c("angle", "refractedAngle")
+cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE}
+for (j in 1:nrow(answers))(
+  cat(j,") $i$=", answers$angle[j],"\\degree \\, $r$=",answers$refractedAngle[j],"\\degree \n",sep="")
+)
+```
