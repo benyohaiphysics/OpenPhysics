@@ -1,0 +1,65 @@
+Material,RefractiveIndex
+Vacuum,1
+Air,1.000293
+Carbon dioxide,1.001
+Hydrogen,1.000132
+Arsenic trisulfide and sulfur in methylene iodide,1.9
+Benzene,1.501
+Carbon disulfide,1.628
+Carbon tetrachloride,1.461
+Ethanol (ethyl alcohol),1.361
+Silicone oil,1.4
+Water,1.33
+10% Glucose solution in water,1.3477
+20% Glucose solution in water,1.3635
+60% Glucose solution in water,1.4394
+Titanium dioxide (rutile phase),2.614
+Diamond,2.417
+Silicon carbide (Moissanite),2.67
+Strontium titanate,2.41
+Amber,1.55
+"Fused silica (a pure form of glass, also called fused quartz)",1.458
+Sodium chloride,1.544
+Liquid helium,1.025
+Perfluorohexane (Fluorinert FC-72),1.251
+Water ice,1.31
+TFE/PDD (Teflon AF),1.315
+Cryolite,1.338
+Cytop,1.34
+Acetone,1.36
+Ethanol,1.36
+Polytetrafluoroethylene (Teflon),1.365
+"Sugar solution, 25%",1.3723
+Cornea (human),1.38
+Lens (human),1.393
+Liver (human),1.369
+Intestinal mucosa (human),1.33
+Kerosene,1.39
+Sylgard 184 (polydimethylsiloxane),1.4118
+"Sugar solution, 50%",1.42
+Polylactic acid,1.46
+Pyrex (a borosilicate glass),1.47
+Glycerol,1.4729
+"Sugar solution, 75%",1.4774
+Poly(methyl methacrylate) (PMMA),1.48
+Acrylic glass,1.491
+Halite (rock salt),1.516
+Plate Glass (window glass),1.52
+Crown glass (pure),1.52
+PETg,1.57
+Polyethylene terephthalate (PET),1.575
+Polycarbonate,1.6
+Crown glass (impure),1.6
+Flint glass (pure),1.6
+Bromine,1.661
+Flint glass (impure),1.8
+Sapphire,1.77
+Boron nitride,2.05
+Cubic zirconia,2.16
+Potassium niobate (KNbO3),2.28
+Zinc oxide,2.4
+Cinnabar (mercury sulfide),3.02
+Silicon,3.41
+Gallium(III) phosphide,3.5
+Gallium(III) arsenide,3.927
+Germanium,4.06
