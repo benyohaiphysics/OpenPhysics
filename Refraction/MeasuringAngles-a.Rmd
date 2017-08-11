@@ -29,7 +29,7 @@ For each of the following ray diagrams measure the angles of incidence, $i$, and
 
 
 ```{r, results = "asis", echo=FALSE}
-refractiveIndices <- read.csv("ReferenceData/RefractiveIndices.csv")
+refractiveIndices <- read.csv("../ReferenceData/RefractiveIndices.csv")
 
 template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 
