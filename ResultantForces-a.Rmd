@@ -1,0 +1,102 @@
+---
+title: "Resultant Forces"
+output:
+  pdf_document: 
+    keep_tex: no
+    latex_engine: lualatex
+  html_document: default
+  documentclass: article
+subtitle: Forces
+classoption: a4paper
+geometry: "left=1cm,right=1cm,top=2cm,bottom=1cm"
+header-includes: 
+  - \usepackage{tikz}
+  - \usetikzlibrary{arrows,shapes,positioning,decorations.markings}
+  - \usepackage{longtable}
+  - \usepackage{gensymb}
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancyplain}
+  - \fancyhf{}
+  - \fancyhead[L]{Version a}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+```
+
+By drawing scale diagrams, determine the resultant force of the three forces given in the question.
+
+```{r include=FALSE, echo=FALSE}
+nodes<-data.frame(
+  angle1=character(),
+  length1=character(),
+  angle2=character(),
+  length2=character(),
+  angle3=character(),
+  length3=character()
+)
+
+for (i in 1:12){
+  nodes<-rbind(nodes,c(sample(1:360, 1),sample(1:5, 1),sample(1:360, 1),sample(1:5, 1),sample(1:360, 1),sample(1:5, 1)))
+}
+colnames(nodes)<-c("angle1","length1","angle2","length2","angle3","length3")
+```
+
+
+```{r, results = "asis", echo=FALSE}
+refractiveIndices <- read.csv("ReferenceData/RefractiveIndices.csv")
+
+template1 <- "\\begin{center}\\begin{tabular}{ p{7.5cm} p{7.5cm} } \\scalebox{1}{\\begin{tikzpicture}
+
+    %% define coordinates
+    \\coordinate (O) at (0,0) ;
+    
+    \\path (O)+(%s:%s) coordinate (A);
+    \\path (O)+(%s:%s) coordinate (B);
+    \\path (O)+(%s:%s) coordinate (C);
+
+    %% rays
+    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (A);
+    \\draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (B);
+    \\draw[green, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (C);
+
+
+\\end{tikzpicture}} &"
+
+template2 <- "\\scalebox{1}{\\begin{tikzpicture}
+
+    %% define coordinates
+    \\coordinate (O) at (0,0) ;
+    
+    \\path (O)+(%s:%s) coordinate (A);
+    \\path (O)+(%s:%s) coordinate (B);
+    \\path (O)+(%s:%s) coordinate (C);
+
+    \\path (O)+(%s:%s) coordinate (A);
+    \\path (A)+(%s:%s) coordinate (B');
+    \\path (B')+(%s:%s) coordinate (R);
+
+    %% rays
+    \\draw[%s, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (A);
+    \\draw[%s, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (A) -- (B');
+    \\draw[%s, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (B') -- (R);
+
+    \\draw[%s, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (R);
+
+\\end{tikzpicture}}\\\\\\end{tabular}\\end{center}"
+
+for (i in 1:12) {
+  string<-cat(i,")\\newline",sprintf(template1,nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i]),sprintf(template2,nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i],nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i],"white","white","white","white"))
+}
+cat(string,"\\clearpage")
+```
+
+## Answers
+```{r, results = "asis", echo=FALSE}
+
+for (i in 1:12) {
+  string<-cat(i,")\\newline",sprintf(template1,nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i]),sprintf(template2,nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i],nodes$angle1[i],nodes$length1[i],nodes$angle2[i],nodes$length2[i],nodes$angle3[i],nodes$length3[i],"red","blue","green","black"))
+}
+cat("\\clearpage",string)
+```
