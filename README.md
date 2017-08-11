@@ -20,3 +20,7 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 - [ ] Complate all areas of the A-Level
 - [ ] Build a community of contributors both authoring and using Github issues
 - [ ] Expand beyond worksheets to textbook pages
+
+## Why FlamingoPhysics?
+
+Why not? Alliteration is fun.
