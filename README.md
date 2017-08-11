@@ -6,8 +6,8 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 
 * Working collaboratively will increase the speed resources are made.
 * Working collaboratively will increase the quality of resources.
-* We're not trying to create exam questions, these should be repeatable tasks for student to practice.
-* Contibute all variations back for the community to benefit.
+* We're trying to produce **lots** of repeatable tasks for students to practice specific skills. This is not a bank of exam questions.
+* All variations should be contributed back to the community.
 
 ## Limitations
 
