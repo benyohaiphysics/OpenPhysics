@@ -24,3 +24,14 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 ## Why FlamingoPhysics?
 
 Why not? Alliteration is fun.
+
+## Getting Started
+
+1.  Install [RStudio](https://www.rstudio.com/)
+2.  Download or clone the project from github (top right of this page)
+3.  Open the project by double clicking on FlamingoPhysics.Rproj
+4.  Open the .Rmd you are interested in
+5.  Click 'Knit' in the markdown window to produce a pdf version of the worksheet.
+![Creating a pdf](Knit.png)
+
+
