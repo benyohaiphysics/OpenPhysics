@@ -49,9 +49,7 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 \\end{tikzpicture}}"
 
 printstring<-"\\begin{center}\\begin{tabular}{ p{5cm} p{5cm} p{5cm} }"
-answers<-data.frame(
-  'angle'=character(), 
-  'refractedAngle'=character()
+answers<-array()
 )
 for (i in 1:12) {
   materialSamples <-sample(1:nrow(refractiveIndices), 2, replace=T)
