@@ -2,7 +2,7 @@
 title: "Images"
 output:
   pdf_document: 
-    keep_tex: yes
+    keep_tex: no
     latex_engine: lualatex
     template: ../worksheetTemplate.tex
   html_document: default
