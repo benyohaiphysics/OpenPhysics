@@ -1,0 +1,512 @@
+\documentclass[a4paper]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[includeheadfoot,left=1cm,right=1cm,top=2cm,bottom=1cm]{geometry}
+\usepackage[unicode=true]{hyperref}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,decorations.markings}
+\usetikzlibrary{%
+    decorations.pathreplacing,%
+    decorations.pathmorphing%
+}
+\usepackage{longtable}
+\usepackage{gensymb}
+\usepackage{arev}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhf{}
+\fancyhead[L]{Images}
+\fancyhead[R]{Reflection}
+\fancyfoot[L]{Version f}
+
+\begin{document}
+Determine the position of the image of the star for each diagram below.
+
+\begin{center}\begin{tabular}{ p{8cm} p{8cm}}1)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=155]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (3.5,2) ;
+    \coordinate (R1) at (-3.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (3.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (-3.5,2);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,2);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(164.054604099077:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(116.565051177078:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  &2)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=-9]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (1.5,2) ;
+    \coordinate (R1) at (0.5,0) ;
+    \coordinate (R2) at (-1.5,0) ;
+    \coordinate (I) at (1.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (0.5,2);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (-1.5,2);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(116.565051177078:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(146.30993247402:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  \\3)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=26]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (-3.5,2) ;
+    \coordinate (R1) at (0.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (-3.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (0.5,2);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,2);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(26.565051177078:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(18.434948822922:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  &4)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=177]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (3.5,1) ;
+    \coordinate (R1) at (-3.5,0) ;
+    \coordinate (R2) at (-2.5,0) ;
+    \coordinate (I) at (3.5,-1) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (-3.5,1);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (-2.5,1);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(171.869897645844:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(170.537677791974:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  \\5)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=162]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (-1.5,2) ;
+    \coordinate (R1) at (-2.5,0) ;
+    \coordinate (R2) at (-3.5,0) ;
+    \coordinate (I) at (-1.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (-2.5,2);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (-3.5,2);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(116.565051177078:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(135:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  &6)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=168]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (1.5,3) ;
+    \coordinate (R1) at (3.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (1.5,-3) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+   % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    % \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+   % \draw[dash pattern=on5pt off3pt] (R1) -- (3.5,3);
+  %  \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,3);
+
+   % \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+  %  \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+  %  \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(56.3099324740202:1cm) ;
+
+  %  \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(71.565051177078:1cm) ;
+
+
+
+%    \draw node[fill,star] at (I) {};
+
+\end{scope}\end{tikzpicture}}\newline  \\ \end{tabular}\end{center}
+
+\clearpage
+
+\subsection{Answers}\label{answers}
+
+These answers represent only one possible ray diagram for coming to your
+answer. Your answer should contain all the same elements.
+
+\begin{center}\begin{tabular}{ p{8cm} p{8cm}}1)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=155]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (3.5,2) ;
+    \coordinate (R1) at (-3.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (3.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (-3.5,2);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,2);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(164.054604099077:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(116.565051177078:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  &2)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=-9]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (1.5,2) ;
+    \coordinate (R1) at (0.5,0) ;
+    \coordinate (R2) at (-1.5,0) ;
+    \coordinate (I) at (1.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (0.5,2);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (-1.5,2);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(116.565051177078:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(146.30993247402:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  \\3)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=26]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (-3.5,2) ;
+    \coordinate (R1) at (0.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (-3.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (0.5,2);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,2);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(26.565051177078:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(18.434948822922:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  &4)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=177]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (3.5,1) ;
+    \coordinate (R1) at (-3.5,0) ;
+    \coordinate (R2) at (-2.5,0) ;
+    \coordinate (I) at (3.5,-1) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (-3.5,1);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (-2.5,1);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(171.869897645844:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(170.537677791974:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  \\5)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=162]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (-1.5,2) ;
+    \coordinate (R1) at (-2.5,0) ;
+    \coordinate (R2) at (-3.5,0) ;
+    \coordinate (I) at (-1.5,-2) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (-2.5,2);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (-3.5,2);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(116.565051177078:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(135:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  &6)\newline\scalebox{0.8}{\begin{tikzpicture}\begin{scope}[rotate=168]
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (S) at (1.5,3) ;
+    \coordinate (R1) at (3.5,0) ;
+    \coordinate (R2) at (2.5,0) ;
+    \coordinate (I) at (1.5,-3) ;
+    
+    \draw node[fill,star] at (S) {};
+
+    % media
+    %\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
+
+    % rays
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    \draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+  \draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
+                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (R1) -- (3.5,3);
+    \draw[dash pattern=on5pt off3pt] (R2) -- (2.5,3);
+
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    \draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+
+    \draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(56.3099324740202:1cm) ;
+
+    \draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(71.565051177078:1cm) ;
+
+    \draw node[fill,star] at (I) {};
+\end{scope}
+\end{tikzpicture}}\newline  \\ \end{tabular}\end{center}
+
+\clearpage
+\end{document}

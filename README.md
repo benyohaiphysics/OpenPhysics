@@ -15,7 +15,7 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 
 ## Future goals
 
-- [ ] Consistent design across all resources. Latex template?
+- [X] Consistent design across all resources. Latex template?
 - [ ] Complete all areas of the GCSE
 - [ ] Complete all areas of the A-Level
 - [ ] Build a community of contributors both authoring and using Github issues

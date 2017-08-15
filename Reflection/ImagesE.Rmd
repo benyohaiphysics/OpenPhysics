@@ -7,7 +7,7 @@ output:
     template: ../worksheetTemplate.tex
   html_document: default
 subtitle: Reflection
-institute: Version d
+institute: Version e
 ---
 
 ```{r setup, include=FALSE}
@@ -39,7 +39,7 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 
     %% rays
    %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
-    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+    %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
   \\draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
                     amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
 
@@ -95,7 +95,7 @@ cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
 
 ## Answers
 
-These answers represent only one possible ray diagram for coming to your answer. You answer should contain all the same elements.
+These answers represent only one possible ray diagram for coming to your answer. Your answer should contain all the same elements.
 
 ```{r, results = "asis", echo=FALSE}
 

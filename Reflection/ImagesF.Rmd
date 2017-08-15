@@ -2,12 +2,14 @@
 title: "Images"
 output:
   pdf_document: 
-    keep_tex: no
+    keep_tex: yes
     latex_engine: lualatex
     template: ../worksheetTemplate.tex
   html_document: default
 subtitle: Reflection
-institute: Version d
+institute: Version f
+include-header:
+- \def\arraystretch{0.50}
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +22,7 @@ Determine the position of the image of the star for each diagram below.
 ```{r, results = "asis", echo=FALSE}
 
 ## Base template for creating a refraction ray diagram, originally found here: http://texample.net/tikz/examples/refraction/
-template <- "\\scalebox{0.8}{\\begin{tikzpicture}
+template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
 
     %% define coordinates
     \\coordinate (O) at (0,0) ;
@@ -31,15 +33,13 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
     
     \\draw node[fill,star] at (S) {};
 
-
-  
     %% media
-    \\fill[blue!25!,opacity=.3] (-4,0) rectangle (4,4);
-    \\fill[white!25!] (-4,0) rectangle (4,-4);
+    %%\\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \\fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
 
     %% rays
    %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
-    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
+    %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
   \\draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
                     amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
 
@@ -58,7 +58,7 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 
 %%    \\draw node[fill,star] at (I) {};
 
-\\end{tikzpicture}}"
+\\end{scope}\\end{tikzpicture}}"
 
 
 printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
@@ -67,16 +67,18 @@ printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
 areflectxs<-data.frame()
 aobjectx<-array()
 aobjecty<-array()
+atwist<-array()
 
 for (i in 1:6) {
   reflectxs <- sample(-3.5:3.5,3,replace=FALSE)
   objectx <- reflectxs[3]
-  objecty <- sample(1.0:3.5,1)
+  objecty <- sample(1.0:3.1,1)
+  twist <- sample(c(-30:30,150:210),1)
   reflectangle1<-rad2deg(atan(objecty/abs(reflectxs[1]-objectx)))
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  printstring<-cat(printstring,i,")\\newline",sprintf(template,twist,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
   if((i/2)%%1==0){
@@ -88,19 +90,19 @@ for (i in 1:6) {
 areflectxs<-rbind(areflectxs,reflectxs)
 aobjectx<-c(aobjectx,objectx)
 aobjecty<-c(aobjecty,objecty)
-  
+atwist<-c(atwist,twist)  
 }
 cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
 ```
 
 ## Answers
 
-These answers represent only one possible ray diagram for coming to your answer. You answer should contain all the same elements.
+These answers represent only one possible ray diagram for coming to your answer. Your answer should contain all the same elements.
 
 ```{r, results = "asis", echo=FALSE}
 
 ## Base template for creating a refraction ray diagram, originally found here: http://texample.net/tikz/examples/refraction/
-template <- "\\scalebox{0.8}{\\begin{tikzpicture}
+template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
 
     %% define coordinates
     \\coordinate (O) at (0,0) ;
@@ -111,11 +113,9 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
     
     \\draw node[fill,star] at (S) {};
 
-
-  
     %% media
-    \\fill[blue!25!,opacity=.3] (-4,0) rectangle (4,4);
-    \\fill[white!25!] (-4,0) rectangle (4,-4);
+    %%\\fill[white!25!,opacity=.3] (-3.6,0) rectangle (3.6,3.6);
+    \\fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
 
     %% rays
     \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
@@ -137,7 +137,7 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 
 
     \\draw node[fill,star] at (I) {};
-
+\\end{scope}
 \\end{tikzpicture}}"
 
 
@@ -150,7 +150,7 @@ for (i in 1:6) {
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  printstring<-cat(printstring,i,")\\newline",sprintf(template,atwist[i+1],objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
   if((i/2)%%1==0){
