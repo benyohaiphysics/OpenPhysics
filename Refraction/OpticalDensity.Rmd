@@ -4,21 +4,10 @@ output:
   pdf_document: 
     keep_tex: no
     latex_engine: lualatex
+    template: ../worksheetTemplate.tex
   html_document: default
-  documentclass: article
 subtitle: Refraction
-classoption: a4paper
-geometry: "left=1cm,right=1cm,top=2cm,bottom=1cm"
-header-includes: 
-  - \usepackage{tikz}
-  - \usetikzlibrary{arrows,shapes,positioning,decorations.markings}
-  - \usepackage{longtable}
-  - \usepackage{gensymb}
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancyplain}
-  - \fancyhf{}
----
-
+institute: Version a
 ---
 
 ```{r setup, include=FALSE}
@@ -76,7 +65,7 @@ ray1length <- min(3/cos(deg2rad(angle)),3/cos(deg2rad(90-angle)))
 ray2length <- min(3/cos(deg2rad(refractedAngle)),3/cos(deg2rad(90-refractedAngle)))
 
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,sprintf(template,material1name,material2name,90+angle,ray1length,90-refractedAngle,ray2length,90+angle,270+refractedAngle,mean(c(90,90+angle)),mean(c(270,270+refractedAngle))),i,")\\newline")
+  printstring<-cat(printstring,sprintf(template,material1name,material2name,90+angle,ray1length,90-refractedAngle,ray2length,90+angle,270+refractedAngle,mean(c(90,90+angle)),mean(c(270,270+refractedAngle))),"\\newline ",i,")\\newline",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
   if((i/3)%%1==0){
@@ -100,6 +89,6 @@ cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
 ```{r, results = "asis", echo=FALSE}
 ##Loop through answer table
 for (j in 2:length(answers))(
-  cat(j-1,") ",answers[j],"\\newline")
+  cat(" ",j-1,") ",answers[j],"\n",sep="")
 )
 ```

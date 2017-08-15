@@ -1,23 +1,13 @@
 ---
-title: "Measuring Angles a"
+title: "Measuring Angles"
 output:
   pdf_document: 
     keep_tex: no
     latex_engine: lualatex
+    template: ../worksheetTemplate.tex
   html_document: default
-  documentclass: article
 subtitle: Refraction
-classoption: a4paper
-geometry: "left=1cm,right=1cm,top=2cm,bottom=1cm"
-header-includes: 
-  - \usepackage{tikz}
-  - \usetikzlibrary{arrows,shapes,positioning,decorations.markings}
-  - \usepackage{longtable}
-  - \usepackage{gensymb}
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancyplain}
-  - \fancyhf{}
-  - \fancyhead[L]{Version a}
+institute: Version a
 ---
 
 ```{r setup, include=FALSE}
