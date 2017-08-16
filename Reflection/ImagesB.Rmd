@@ -18,7 +18,7 @@ library(pracma)
 Determine the position of the image of the star for each diagram below.
 
 ```{r, results = "asis", echo=FALSE}
-
+numberOfImages<-12
 ## Base template for creating a refraction ray diagram, originally found here: http://texample.net/tikz/examples/refraction/
 template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 
@@ -61,14 +61,14 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 \\end{tikzpicture}}"
 
 
-printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
+printstring<-" "
 
 ## Loop to create each example
 areflectxs<-data.frame()
 aobjectx<-array()
 aobjecty<-array()
 
-for (i in 1:6) {
+for (i in 1:numberOfImages) {
   reflectxs <- sample(-3.5:3.5,3,replace=FALSE)
   objectx <- reflectxs[3]
   objecty <- sample(1.0:3.5,1)
@@ -76,13 +76,13 @@ for (i in 1:6) {
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  plotstring<-paste(i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
-  if((i/2)%%1==0){
-    printstring<-cat(printstring,"\\\\")
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
   } else{
-    printstring<-cat(printstring,"&")
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
   }
 
 areflectxs<-rbind(areflectxs,reflectxs)
@@ -90,7 +90,7 @@ aobjectx<-c(aobjectx,objectx)
 aobjecty<-c(aobjecty,objecty)
   
 }
-cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
+cat(printstring,"\\clearpage")
 ```
 
 ## Answers
@@ -139,8 +139,8 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}
 \\end{tikzpicture}}"
 
 
-printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
-for (i in 1:6) {
+printstring<-" "
+for (i in 1:numberOfImages) {
   reflectxs <- as.numeric(areflectxs[i,])
   objectx <- aobjectx[i+1]
   objecty <- aobjecty[i+1]
@@ -148,17 +148,17 @@ for (i in 1:6) {
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  plotstring<-paste(i,")\\newline",sprintf(template,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
-  if((i/2)%%1==0){
-    printstring<-cat(printstring,"\\\\")
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
   } else{
-    printstring<-cat(printstring,"&")
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
   }
 
   
 }
-cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
+cat(printstring,"\\clearpage")
 
 ```

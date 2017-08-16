@@ -8,8 +8,6 @@ output:
   html_document: default
 subtitle: Reflection
 institute: Version f
-include-header:
-- \def\arraystretch{0.50}
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +18,7 @@ library(pracma)
 Determine the position of the image of the star for each diagram below.
 
 ```{r, results = "asis", echo=FALSE}
-
+numberOfImages<-12
 ## Base template for creating a refraction ray diagram, originally found here: http://texample.net/tikz/examples/refraction/
 template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
 
@@ -30,7 +28,6 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
     \\coordinate (R1) at (%s,0) ;
     \\coordinate (R2) at (%s,0) ;
     \\coordinate (I) at (%s,%s) ;
-    
     \\draw node[fill,star] at (S) {};
 
     %% media
@@ -38,38 +35,29 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
     \\fill[white!25!] (-3.6,0) rectangle (3.6,-3.6);
 
     %% rays
-   %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
+    %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R1) -- (S) ;
     %% \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{<}}}}] (R2) -- (S) ;
-  \\draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,
-                    amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
+    \\draw[black,line width=.5pt,postaction={draw,decorate,decoration={border,angle=-45,amplitude=0.3cm,segment length=2mm}}](-4,0)--(4,0);
 
     %% axis
-   %% \\draw[dash pattern=on5pt off3pt] (R1) -- (%s,%s);
-  %%  \\draw[dash pattern=on5pt off3pt] (R2) -- (%s,%s);
+    %% \\draw[dash pattern=on5pt off3pt] (R1) -- (%s,%s);
+    %% \\draw[dash pattern=on5pt off3pt] (R2) -- (%s,%s);
 
-   %% \\draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
-  %%  \\draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
+    %% \\draw[blue, ultra thick,dash pattern=on5pt off3pt] (R1) -- (I) ;
+    %% \\draw[blue, ultra thick,dash pattern=on5pt off3pt] (R2) -- (I) ;
 
-  %%  \\draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(%s:1cm) ;
-
-  %%  \\draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(%s:1cm) ;
-
-
-
-%%    \\draw node[fill,star] at (I) {};
-
-\\end{scope}\\end{tikzpicture}}"
-
-
-printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
+    %% \\draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (R1) -- +(%s:1cm) ;
+    %% \\draw[blue, ultra thick, postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (R2) -- +(%s:1cm) ;
+    %% \\draw node[fill,star] at (I) {};
+    \\end{scope}\\end{tikzpicture}}"
 
 ## Loop to create each example
 areflectxs<-data.frame()
 aobjectx<-array()
 aobjecty<-array()
 atwist<-array()
-
-for (i in 1:6) {
+printstring<-" "
+for (i in 1:numberOfImages) {
   reflectxs <- sample(-3.5:3.5,3,replace=FALSE)
   objectx <- reflectxs[3]
   objecty <- sample(1.0:3.1,1)
@@ -78,13 +66,13 @@ for (i in 1:6) {
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,twist,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  plotstring<-paste(i,")\\newline",sprintf(template,twist,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
-  if((i/2)%%1==0){
-    printstring<-cat(printstring,"\\\\")
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
   } else{
-    printstring<-cat(printstring,"&")
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
   }
 
 areflectxs<-rbind(areflectxs,reflectxs)
@@ -92,7 +80,7 @@ aobjectx<-c(aobjectx,objectx)
 aobjecty<-c(aobjecty,objecty)
 atwist<-c(atwist,twist)  
 }
-cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
+cat(printstring,"\\clearpage")
 ```
 
 ## Answers
@@ -141,8 +129,8 @@ template <- "\\scalebox{0.8}{\\begin{tikzpicture}\\begin{scope}[rotate=%s]
 \\end{tikzpicture}}"
 
 
-printstring<-"\\begin{center}\\begin{tabular}{ p{8cm} p{8cm}}"
-for (i in 1:6) {
+printstring<-""
+for (i in 1:numberOfImages) {
   reflectxs <- as.numeric(areflectxs[i,])
   objectx <- aobjectx[i+1]
   objecty <- aobjecty[i+1]
@@ -150,17 +138,17 @@ for (i in 1:6) {
   reflectangle2<-rad2deg(atan(objecty/abs(reflectxs[2]-objectx)))
   
 ## Insert the vraibles above into the template
-  printstring<-cat(printstring,i,")\\newline",sprintf(template,atwist[i+1],objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline ",sep="")
+  plotstring<-paste(i,")\\newline",sprintf(template,twist,objectx,objecty,reflectxs[1],reflectxs[2],objectx,-objecty,reflectxs[1],objecty,reflectxs[2],objecty,if(reflectxs[1]<=objectx){180-reflectangle1}else{reflectangle1},if(reflectxs[2]<=objectx){180-reflectangle2}else{reflectangle2}),"\\newline",sep="")
   
 ## Loop to build the rows in the table. I hope for a better way to do this.
-  if((i/2)%%1==0){
-    printstring<-cat(printstring,"\\\\")
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
   } else{
-    printstring<-cat(printstring,"&")
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
   }
 
   
 }
-cat(printstring,"\\end{tabular}\\end{center}\\clearpage")
+cat(printstring,"\\clearpage")
 
 ```
