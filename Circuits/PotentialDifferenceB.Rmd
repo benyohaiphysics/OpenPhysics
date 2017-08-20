@@ -1,0 +1,94 @@
+---
+title: "Potential Difference"
+output:
+  pdf_document: 
+    keep_tex: no
+    template: ../worksheetTemplate.tex
+  html_document: default
+subtitle: Circuits
+institute: Version b
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+formatEng <- function(x) {
+   s<-as.numeric(strsplit(format(x, scientific=T),"e")[[1]])
+   return(paste(s[1]*10^(s[2]%%3),as.integer(s[2]-(s[2]%%3)),sep="e"))
+}
+```
+
+Calculate the potential difference measured by the voltmeter in each of the following circuits;
+
+```{r, results = "asis", echo=FALSE}
+numberOfImages<-12
+template <- "\\begin{center}
+\\begin{circuitikz}[european]
+\\draw  (0,0)
+        %s
+        (0,4)
+        %s
+        (4,4)
+        %s 
+        (4,0)
+        %s 
+        (0,0)
+        %s
+;
+\\end{circuitikz}
+\\end{center}"
+
+printstring<-""
+answers<-array()
+for (i in 1:numberOfImages) {
+  resistance<-sample(1:100,1)*10^(sample(-9:6,1))
+  current<-sample(1:100,1)*10^(sample(-3:3,1))
+  position <- sample(1:4,4,replace=FALSE)
+component<-c("to[battery]",paste("to[R=\\SI{",formatEng(resistance),"}{\\ohm}]"),paste("to[short] ",if(position[3]==1){
+  '(0,2) node[component,label=left:'
+  }
+  else if(position[3]==2){
+    '(2,4) node[component,label=above:'
+  }
+    else if(position[3]==3){
+    '(4,2) node[component,label=right:'
+    }
+      else if(position[3]==4){
+    '(2,0) node[component,label=below:'
+  }
+  ,'\\SI{',formatEng(current),'}{\\ampere}]{A} to[short]'),'to[short]')
+  circuit<-data.frame(position,component)
+plotstring<-paste(i,")\\newline",sprintf(template,factor(circuit[which(position=='1'),]$component),factor(circuit[which(position=='2'),]$component),factor(circuit[which(position=='3'),]$component),factor(circuit[which(position=='4'),]$component),
+                 if(position[2]==1){paste(
+          "(0,0.5)--(-2,0.5) 
+          to[short] (-2,2) node[component]{V} to[short] 
+          (-2,3.5)--(0,3.5)")
+  }else if(position[2]==2){paste("(0.5,4)--(0.5,6) 
+          to[short] (2,6) node[component]{V} to[short] 
+          (3.5,6)--(3.5,4)")
+  } else if(position[2]==3){paste("(4,3.5)--(6,3.5) 
+          to[short] (6,2) node[component]{V} to[short] 
+          (6,0.5)--(4,0.5)")
+    }else if(position[2]==4){paste("(3.5,0)--(3.5,-2) 
+          to[short] (2,-2) node[component]{V} to[short] 
+          (0.5,-2)--(0.5,0)")
+  }       )       )
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
+  }
+answers<-c(answers,current*resistance)
+}
+cat(printstring,"\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE}
+
+for (j in 2:length(answers))(
+    cat(j-1,") $V=\\SI{ ", formatEng(signif(answers[j],2))," }{\\volt}$ \n",sep="")
+)
+```

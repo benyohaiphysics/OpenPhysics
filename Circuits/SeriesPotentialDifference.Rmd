@@ -1,0 +1,142 @@
+---
+title: "Series - Potential Difference"
+output:
+  pdf_document: 
+    keep_tex: no
+    template: ../worksheetTemplate.tex
+  html_document: default
+subtitle: Circuits
+institute: Version a
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+formatEng <- function(x) {
+   s<-as.numeric(strsplit(format(x, scientific=T),"e")[[1]])
+   return(paste(s[1]*10^(s[2]%%3),as.integer(s[2]-(s[2]%%3)),sep="e"))
+}
+```
+
+Calculate the unknown potential differences that would be read on the two voltmeters labels $V_{1}$ and $V_{2}$.;
+
+```{r, results = "asis", echo=FALSE}
+numberOfImages<-12
+template <- "\\begin{center}
+\\begin{circuitikz}[european]
+\\draw  (0,0)
+        %s
+        (0,4)
+        %s
+        (4,4)
+        %s 
+        (4,0)
+        %s 
+        (0,0)
+%s
+%s
+%s
+;
+\\end{circuitikz}
+\\end{center}"
+
+printstring<-""
+answers<-data.frame()
+for (i in 1:numberOfImages) {
+  scale<-(sample(-9:6,1))
+  resistance1<-sample(1:100,1)*10^scale
+  resistance2<-sample(1:100,1)*10^scale
+  voltage<-sample(1:100,1)*10^(sample(-9:6,1))
+  position <- sample(1:4,4,replace=FALSE)
+component<-c("to[battery]",paste("to[R=\\SI{",formatEng(resistance1),"}{\\ohm}]"),paste("to[R=\\SI{",formatEng(resistance2),"}{\\ohm}]"),paste("to[short] ",if(position[4]==1){
+  '(0,2)'
+  }
+  else if(position[4]==2){
+    '(2,4)'
+  }
+    else if(position[4]==3){
+    '(4,2)'
+    }
+      else if(position[4]==4){
+    '(2,0)'
+  }
+  ,' node[component]{A} to[short]'))
+  circuit<-data.frame(position,component)
+plotstring<-paste(i,")\\newline",sprintf(template,factor(circuit[which(position=='1'),]$component),factor(circuit[which(position=='2'),]$component),factor(circuit[which(position=='3'),]$component),factor(circuit[which(position=='4'),]$component),
+if(position[1]==1){paste(
+          "(0,0.5)--(-2,0.5) 
+to[short] (-2,2)
+node[component,label=left:\\SI{",formatEng(voltage),"}{\\volt}]{V} to[short] 
+          (-2,3.5)--(0,3.5)")
+  }else if(position[1]==2){paste("(0.5,4)--(0.5,6) 
+to[short] (2,6)
+node[component,label=above:\\SI{",formatEng(voltage),"}{\\volt}]{V} to[short] 
+          (3.5,6)--(3.5,4)")
+  } else if(position[1]==3){paste("(4,3.5)--(6,3.5)
+to[short] (6,2)
+node[component,label=right:\\SI{",formatEng(voltage),"}{\\volt}]{V} to[short] 
+          (6,0.5)--(4,0.5)")
+    }else if(position[1]==4){paste("(3.5,0)--(3.5,-2) 
+to[short] (2,-2)
+node[component,label=below:\\SI{",formatEng(voltage),"}{\\volt}]{V} to[short] 
+          (0.5,-2)--(0.5,0)")
+  }
+,
+if(position[2]==1){paste(
+          "(0,0.5)--(-2,0.5) 
+to[short] (-2,2)
+node[component]{$V_{1}$} to[short]  
+          (-2,3.5)--(0,3.5)")
+  }else if(position[2]==2){paste("(0.5,4)--(0.5,6) 
+to[short] (2,6)
+node[component]{$V_{1}$} to[short] 
+          (3.5,6)--(3.5,4)")
+  } else if(position[2]==3){paste("(4,3.5)--(6,3.5)
+to[short] (6,2)
+node[component]{$V_{1}$} to[short]  
+          (6,0.5)--(4,0.5)")
+    }else if(position[2]==4){paste("(3.5,0)--(3.5,-2) 
+to[short] (2,-2)
+node[component]{$V_{1}$} to[short] 
+          (0.5,-2)--(0.5,0)")
+  }
+,
+if(position[3]==1){paste(
+          "(0,0.5)--(-2,0.5) 
+to[short] (-2,2)
+node[component]{$V_{2}$} to[short] 
+          (-2,3.5)--(0,3.5)")
+  }else if(position[3]==2){paste("(0.5,4)--(0.5,6) 
+to[short] (2,6)
+node[component]{$V_{2}$} to[short] 
+          (3.5,6)--(3.5,4)")
+  } else if(position[3]==3){paste("(4,3.5)--(6,3.5)
+to[short] (6,2)
+node[component]{$V_{2}$} to[short] 
+          (6,0.5)--(4,0.5)")
+    }else if(position[3]==4){paste("(3.5,0)--(3.5,-2) 
+to[short] (2,-2)
+node[component]{$V_{2}$} to[short] 
+          (0.5,-2)--(0.5,0)")
+  }
+))
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{9cm} p{9cm}}",plotstring," & ")
+  }
+answers<-rbind(answers,c(voltage*(resistance1/(resistance1+resistance2)),voltage*(resistance2/(resistance1+resistance2))))
+}
+colnames(answers)<-c('resistance1','resistance2')
+cat(printstring,"\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE}
+
+for (j in 2:nrow(answers))(
+    cat(j-1,") $V_{1}=\\SI{ ",formatEng(signif(answers[j,]$resistance1,2))," }{\\volt}, V_{2}=\\SI{ ", formatEng(signif(answers[j,]$resistance2,2))," }{\\volt}$ \n",sep="")
+)
+```
