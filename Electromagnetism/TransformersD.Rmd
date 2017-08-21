@@ -1,0 +1,112 @@
+---
+title: "Transformers"
+output:
+  pdf_document: 
+    keep_tex: no
+    template: ../worksheetTemplate.tex
+  html_document: default
+subtitle: Electromagnetism
+institute: Version d
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+formatEng <- function(x) {
+   s<-as.numeric(strsplit(format(x, scientific=T),"e")[[1]])
+   return(paste(s[1]*10^(s[2]%%3),as.integer(s[2]-(s[2]%%3)),sep="e"))
+}
+```
+
+Calculate the current through the primary, $I_p$ or secondary coil $I_s$. The number of turns *drawn* on the diagram aren't accurate and assume the transformer is 100% efficient;
+
+```{r, results = "asis", echo=FALSE}
+numberOfImages<-12
+
+template <- "\\begin{center}
+%% inner square side length
+\\def\\a{3.0}
+%% outer square side length
+\\def\\b{5.0}
+%% x displacement of back squares
+\\def\\dx{0.8}
+%% y displacement of back squares
+\\def\\dy{0.5}
+\\def\\lx{1.0}
+\\def\\ly{1.0}
+%% round corner correction
+\\def\\dr{0.02}
+\\begin{tikzpicture}[global scale/.style={scale=1.0}, rotate=-5, xslant=-0.1, thick, every
+    node/.style={transform shape, scale=0.8}]
+\\begin{scope}[even odd rule]
+\\filldraw[rounded corners=2pt, fill=gray, rotate=-0, opacity=1.0] (\\dx,
+\\dy) rectangle ++(5,5) (\\lx+\\dx,\\ly+\\dy) rectangle ++(\\a, \\a);
+\\fill [rounded corners=2pt, fill=gray] (\\b, 0) --++ (0, \\dy+\\dr+0.02) --++(\\dx, 0) --cycle;
+\\fill [rounded corners=2pt, fill=gray] (0, \\b) --++ (\\dx+\\dr+0.02, 0) --++(0, \\dy)--cycle;
+\\filldraw[rounded corners=2pt, fill=gray!50, rotate=-0] (0,0) rectangle
+++(\\b, \\b) (\\lx,\\ly) rectangle ++(\\a, \\a);
+\\draw (\\b-\\dr,\\dr) --++(\\dx, \\dy);
+\\draw (\\b-\\dr,\\b-\\dr) --++(\\dx, \\dy);
+\\draw (\\dr,\\b-\\dr) --++(\\dx, \\dy);
+\\draw [blue, thick, postaction={decorate}, decoration={markings, mark=at position 0.5 with {\\arrow{latex}}}] (0, \\ly) --++(-1.5,0);
+\\foreach \\z in {0,%s,%s,...,2.5}
+    {
+    \\draw [rounded corners=2pt,blue, thick]
+    (-0.0,\\ly+\\z+0.08)--(-0.09,\\ly+\\z) -- (\\lx, \\ly+\\z)--++(0.89,0.5)
+    --++(-0.08, 0.05);
+}
+\\draw [rounded corners=2pt,blue, thick, postaction={decorate}, decoration={markings, mark=at position 0.5 with {\\arrow{latex}}}] (-1.5,
+\\ly+2.8) --++(1.5,0) node[black, above, pos=0.4,text width=1.1cm] {$I_p$ %s};
+\\draw[latex-latex] (-\\lx, \\ly) --++(0, 2.8) node[midway, left, text width=1.1cm] {$V_p$%s};
+
+\\draw [rounded corners=2pt,red, thick] (\\a+\\lx-2*\\dr,
+\\ly+2*\\dr)--++(-\\dr, -\\dr)--++(\\lx+\\dx+2*\\dr, 0);
+\\draw [red, postaction={decorate}, decoration={markings, mark=at position 0.5 with {\\arrowreversed{latex}}}] (\\b+\\dx-\\dr, \\ly+\\dr)--++(\\a/2, 0);
+\\draw [rounded corners=2pt, red, thick, postaction={decorate}, decoration={markings, mark=at position 0.5 with {\\arrow{latex}}}]
+(\\a+3*\\lx-0.2, \\ly+3.1) --++(\\a/2, 0) node[black, midway, above, text width=1.1cm] {$I_s$ %s};
+\\foreach \\z in {.125,%s,%s,...,2.5}
+    {
+    \\draw [rounded corners=2pt, red, thick] (\\a+\\lx,\\ly+\\z+0.1)--
+    (\\a+\\lx-0.07,\\ly+\\z) -- (\\a+2*\\lx, \\ly+\\z)--++(0.87,0.5)--++(-0.06,
+    0.06);
+    }
+\\draw[latex-latex] (2*\\a+\\lx, \\ly) --++(0, 3.1) node[midway, left, text width=1.1cm] {$V_s$%s};
+%% \\node[right,text width=1.9cm] at (0,-0.4) {$N_p$  turns};
+%% \\node[right,text width=1.9cm] at (4,-0.4) {$N_s$  turns};
+\\end{scope}
+ \\end{tikzpicture}\\end{center}"
+
+printstring<-""
+answers<-array()
+for (i in 1:numberOfImages) {
+primaryTurns<-sample(seq(from = 50, to = 1000, by = 50),1)
+secondaryTurns<-sample(seq(from = 50, to = 1000, by = 50),1)
+primaryVoltage<-sample(1:100,1)*10^(sample(-9:6,1))
+secondaryVoltage<-(primaryVoltage*secondaryTurns)/primaryTurns
+primarySpacing<-seq(from = 0, to=2.5, by = 2.5/(primaryTurns/10))
+secondarySpacing<-seq(from = 0.125, to=2.5, by = (2.5-0.125)/(secondaryTurns/10))
+primaryCurrent<-sample(1:100,1)*10^(sample(-9:6,1))
+secondaryCurrent<-(primaryVoltage*primaryCurrent)/secondaryVoltage
+hidePrimary<-sample(c(TRUE,FALSE),1)
+plotstring<-paste(i,")\\newline",sprintf(template,primarySpacing[2],primarySpacing[3],if(hidePrimary==TRUE)("")else(paste(" = \\SI{",formatEng(signif(primaryCurrent,2)),"}{\\ampere}")),paste(" = \\SI{",formatEng(signif(primaryVoltage,2)),"}{\\volt}"),if(hidePrimary==FALSE)("")else(paste(" = \\SI{",formatEng(signif(secondaryCurrent,2)),"}{\\ampere}")),secondarySpacing[2],secondarySpacing[3],paste(" = \\SI{",formatEng(signif(secondaryVoltage,2)),"}{\\volt}"),sep=""))
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}\\vspace{30mm} ")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{9cm} p{9cm}}",plotstring," & ")
+  }
+answers<-c(answers,if(hidePrimary==TRUE)(paste("$I_p$ = \\SI{",formatEng(signif(primaryCurrent,2)),"}{\\ampere}"))else(paste("$I_s$ = \\SI{",formatEng(signif(secondaryCurrent,2)),"}{\\ampere}")))
+
+}
+
+cat(printstring,"\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE}
+for (j in 2:length(answers))(
+    cat(j-1,") ",answers[j],"\n",sep="")
+)
+
+```
