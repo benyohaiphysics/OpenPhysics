@@ -18,7 +18,11 @@ formatEng <- function(x) {
 }
 ```
 
+<<<<<<< HEAD
 Calculate the current through the primary, $I_p$ or secondary coil $I_s$. The number of turns *drawn* on the diagram aren't accurate and assume the transformer is 100% efficient;
+=======
+Calculate the potential difference across the primary, $V_p$ or secondary coil $V_s$. The number of turns *drawn* on the diagram aren't accurate and assume the transformer is 100% efficient;
+>>>>>>> bb46addd510b82767fcdca58632059f0087af312
 
 ```{r, results = "asis", echo=FALSE}
 numberOfImages<-12
