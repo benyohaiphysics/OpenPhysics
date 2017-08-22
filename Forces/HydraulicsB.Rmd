@@ -1,0 +1,93 @@
+---
+title: "Hydraulics"
+output:
+  pdf_document: 
+    keep_tex: no
+    template: ../worksheetTemplate.tex
+  html_document: default
+subtitle: Forces
+institute: Version b
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+formatEng <- function(x) {
+   s<-as.numeric(strsplit(format(x, scientific=T),"e")[[1]])
+   return(paste(s[1]*10^(s[2]%%3),as.integer(s[2]-(s[2]%%3)),sep="e"))
+}
+```
+
+Calculate the unknown area in each of the hydraulic systems below;
+
+```{r, results = "asis", echo=FALSE}
+numberOfImages<-12
+
+template <- "\\begin{center}
+        \\begin{tikzpicture}
+\\def\\wa{%s}
+\\def\\wb{%s}
+\\def\\wc{%s}
+\\def\\apw{%s}
+
+          \\coordinate (A) at (1,6) ;
+    \\coordinate (B) at (1,1) ;
+    \\coordinate (C) at (9,1) ;
+    \\coordinate (D) at (9,6) ;
+    \\coordinate (E) at (\\wb,6) ;
+\\coordinate (F) at (\\wb,2) ;
+\\coordinate (G) at (\\wa+1,2) ;
+\\coordinate (H) at (\\wa+1,6) ;
+\\coordinate (K) at (1,5) ;
+\\coordinate (L) at (\\wb,3) ;
+\\coordinate (M) at (1.5,5) ;
+
+        \\filldraw[black] (K) --+ (\\wa,0) --+ (\\wa,0.5) --+ (0,0.5);
+        \\filldraw[black] (L) --+ (9-\\wb,0) --+ (9-\\wb,0.5) --+ (0,0.5);
+        \\filldraw[black!40] (K) --+ (\\wa,0) -- (G) -- (F) --(L) --+ (9-\\wb,0) -- (C) -- (B);
+        \\draw [thick] (A) -- (B) -- (C) -- (D);
+        \\draw [thick] (E) -- (F) -- (G) -- (H);
+        \\draw[<-, very thick,red] (K) ++ (\\wa/2,0.5) --+ (0,1); 
+        \\draw[->, very thick, red] (L) ++ (\\wc,0.5) --+ (0,2);
+        \\node[black, above] at (\\apw,6.5) {%s};
+        \\node[black, above] at (\\wb+\\wc,5.5) {%s};
+        \\node[white, above right] at (K) {%s};
+        \\node[white, above right] at (L) {%s};
+        \\end{tikzpicture}
+\\end{center}"
+
+printstring<-""
+answers<-array()
+for (i in 1:numberOfImages) {
+primaryArea<-sample(1:100,1)
+secondaryArea<-sample(1:100,1)
+primaryForce<-sample(1:100,1)*10^(sample(0:3,1))
+secondaryForce<-(primaryForce*secondaryArea)/primaryArea
+primaryWidth<-(((3)/100)*primaryArea)+1.1
+secondaryWidth<-9-((((3)/100)*secondaryArea)+1.1)
+arrowSWidth<-(9-secondaryWidth)/2
+arrowPWidth<-(primaryWidth/2)+1
+hidePrimary<-sample(c(TRUE,FALSE),1)
+plotstring<-paste(i,")\\newline",sprintf(template,primaryWidth,secondaryWidth,arrowSWidth,arrowPWidth,paste("\\SI{",formatEng(signif(primaryForce,3)),"}{\\newton}"),paste("\\SI{",formatEng(signif(secondaryForce,3)),"}{\\newton}"),if(hidePrimary==TRUE)("$A_1$")else(paste("\\SI{",formatEng(signif(primaryArea,3)),"}{\\metre\\squared}")),if(hidePrimary==FALSE)("$A_2$")else(paste("\\SI{",formatEng(signif(secondaryArea,3)),"}{\\metre\\squared}")),sep=""))
+
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}\\vspace{30mm} ")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{9cm} p{9cm}}",plotstring," & ")
+  }
+answers<-c(answers,if(hidePrimary==TRUE)(paste("$A_1$ = \\SI{",formatEng(signif(primaryArea,2)),"}{\\metre\\squared}"))else(paste("$A_2$ = \\SI{",formatEng(signif(secondaryArea,2)),"}{\\metre\\squared}")))
+
+}
+
+cat(printstring,"\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE}
+for (j in 2:length(answers))(
+    cat(j-1,") ",answers[j],"\n",sep="")
+)
+
+```

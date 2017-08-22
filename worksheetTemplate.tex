@@ -175,11 +175,12 @@ $endif$
 \def\fps@figure{htbp}
 \makeatother
 \usepackage{tikz}
-\usetikzlibrary{arrows,shapes,positioning,decorations.markings}
+\usetikzlibrary{arrows,shapes,positioning,decorations.markings,calc,intersections,through,backgrounds,snakes}
 \usetikzlibrary{%
     decorations.pathreplacing,%
     decorations.pathmorphing%
 }
+\usepackage{tkz-euclide}
 \usepackage[siunitx]{circuitikz}
 \tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
 \usepackage{longtable}
