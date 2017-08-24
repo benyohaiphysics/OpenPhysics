@@ -1,0 +1,124 @@
+---
+title: "Resolving forces"
+output:
+  pdf_document: 
+    keep_tex: no
+    template: ../worksheetTemplate.tex
+  html_document: default
+subtitle: Forces
+institute: Version a
+usePrefixes: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+formatEng <- function(x) {
+   s<-as.numeric(strsplit(format(x, scientific=T),"e")[[1]])
+   return(paste(s[1]*10^(s[2]%%3),as.integer(s[2]-(s[2]%%3)),sep="e"))
+}
+```
+
+Resolve the given force into two components; vertical (at 000$^o$) and horizontal (at 090$^o$).
+
+```{r, results = "asis", echo=FALSE, warning=FALSE}
+numberOfImages<-12
+
+template <- "\\begin{center}
+       \\begin{tikzpicture}
+
+    %% define coordinates
+    \\coordinate (O) at (0,0) ;
+    \\coordinate (N) at (0,5) ;
+    
+    \\path (O)+(%s:%s) coordinate (A);
+    \\path (O)+(%s:%s) coordinate (B);
+    \\path (O)+(%s:%s) coordinate (C);
+
+    %% rays
+\\draw[black,dash pattern=on5pt off3pt,->] (O) -- (N);
+    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (A);
+\\path (O) ++(%s:%s) node (AL) {\\SI{%s}{\\newton}};
+      \\draw (0,1) arc (90:-%s:1);
+      \\node[] at (70:1.4)  {$%s\\degree$};
+    %%\\draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- node[auto] {\\SI{%s}{\\newton}} (B);
+    %%\\draw[green, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- node[auto] {\\SI{%s}{\\newton}} (C);
+        \\end{tikzpicture}
+\\end{center}"
+
+printstring<-""
+answers<-data.frame(stringsAsFactors=FALSE)
+for (i in 1:numberOfImages) {
+forceLength<-sample(4:10,1)
+forceAngle<-sample(c(5:85,95:175,185:265,275:355),1)
+reducedAngle<-if(forceAngle>270)(360-forceAngle)else if(forceAngle>180)(forceAngle-180)else if(forceAngle>90)(180-forceAngle)else(forceAngle)
+horizontalLength<-forceLength*sin(deg2rad(reducedAngle))
+horizontalAngle<-if(forceAngle < 180)("90")else("270")
+verticalLength<-forceLength*cos(deg2rad(reducedAngle))
+verticalAngle<-if(forceAngle<90|forceAngle>270)("0")else("180")
+labelAngle<-if(forceAngle>270)(90+reducedAngle)else if(forceAngle>180)(270-reducedAngle)else if(forceAngle>90)(360-forceAngle)else(90-forceAngle)
+
+answers<-rbind(answers,c(forceAngle,forceLength,horizontalAngle,horizontalLength,verticalAngle,verticalLength,forceAngle,forceLength+0.5,forceLength,if(forceAngle<90)(-forceAngle)else(360-forceAngle),labelAngle,signif(horizontalLength,2),signif(verticalLength,2)),stringsAsFactors=FALSE)
+
+plotstring<-paste(i,")\\newline",sprintf(template,forceAngle,forceLength,horizontalAngle,horizontalLength,verticalAngle,verticalLength,forceAngle,(forceLength+0.5),forceLength,if(forceAngle<90){-forceAngle}else{360-forceAngle},labelAngle,signif(horizontalLength,2),signif(verticalLength,2),sep=""))
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(i %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{9cm} p{9cm}}",plotstring," & ")
+  }
+
+
+}
+colnames(answers)<-c("a","b","c","d","e","f","g","h","i","j","k","l","m")
+cat(printstring,"\\clearpage")
+```
+
+## Answers
+
+```{r, results = "asis", echo=FALSE,warning=FALSE}
+
+template <- "\\begin{center}
+       \\begin{tikzpicture}
+
+    %% define coordinates
+    \\coordinate (O) at (0,0) ;
+    \\coordinate (N) at (0,5) ;
+    
+    \\path (O)+(%s:%s) coordinate (A);
+    \\path (O)+(%s:%s) coordinate (B);
+    \\path (O)+(%s:%s) coordinate (C);
+
+    %% rays
+\\draw[black,dash pattern=on5pt off3pt,->] (O) -- (N);
+    \\draw[red, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- (A);
+\\path (O) ++(%s:%s) node (AL) {\\SI{%s}{\\newton}};
+      \\draw (0,1) arc (90:-%s:1);
+      \\node[] at (70:1.4)  {$%s\\degree$};
+    \\draw[blue, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- node[auto, black] {\\SI{%s}{\\newton}} (B);
+    \\draw[green, ultra thick,postaction={decorate,decoration={markings,mark=at position .65 with {\\arrow[scale=1,>=stealth]{>}}}}] (O) -- node[auto, black] {\\SI{%s}{\\newton}} (C);
+        \\end{tikzpicture}
+\\end{center}"
+
+
+printstring<-" "
+for (j in 1:numberOfImages) {
+
+  
+## Insert the vraibles above into the template
+plotstring<-paste(j,")\\newline",sprintf(template,answers$a[j],answers$b[j],answers$c[j],answers$d[j],answers$e[j],answers$f[j],answers$g[j],answers$h[j],answers$i[j],answers$j[j],answers$k[j],answers$l[j],answers$m[j], sep=""))
+
+  
+## Loop to build the rows in the table. I hope for a better way to do this.
+  if(j %% 2 == 0){
+printstring<-paste(printstring,plotstring,"\\end{tabular}\\end{center}")
+  } else{
+        printstring<-paste(printstring,"\\begin{center}\\begin{tabular}{p{8cm} p{8cm}}",plotstring," & ")
+  }
+
+  
+}
+cat(printstring,"\\clearpage")
+
+
+```
