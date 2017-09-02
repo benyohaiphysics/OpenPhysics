@@ -1,4 +1,4 @@
-# FlamingoPhysics
+# OpenPhysics
 
 Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](https://twitter.com/Rosalindphys), I can see there are many advantages to producing new physics resources. I can also see that some tasks are well suited to programmatic generation. I think there is tremendous value in opening up the underlying code so that all physics teachers can contribute to further development.
 
@@ -21,15 +21,12 @@ Inspired by the work of [@gazbd](https://twitter.com/gazbd) and [@Rosalindphys](
 - [ ] Build a community of contributors both authoring and using Github issues
 - [ ] Expand beyond worksheets to textbook pages
 
-## Why FlamingoPhysics?
-
-Why not? Alliteration is fun.
 
 ## Getting Started
 
 1.  Install [RStudio](https://www.rstudio.com/)
 2.  Download or clone the project from github (top right of this page)
-3.  Open the project by double clicking on FlamingoPhysics.Rproj
+3.  Open the project by double clicking on OpenPhysics.Rproj
 4.  Open the .Rmd you are interested in
 5.  Click 'Knit' in the markdown window to produce a pdf version of the worksheet.
 ![Creating a pdf](Knit.png)
